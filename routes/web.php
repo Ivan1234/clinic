@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+//Backoffice
+Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
+	// Route::get('/role', 'RoleController@index')->name('role.index');
+	Route::resource('/role', 'RoleController');
+});
+
+
+
 
