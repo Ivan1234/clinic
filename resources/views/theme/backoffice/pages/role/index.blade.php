@@ -17,7 +17,7 @@
 
 @section('content')
 <div class="section">
-	<p class="caption"><strong>Rolres del sistema</p>
+	<p class="caption"><strong>Roles del sistema</p>
 		<div class="divider"></div>
 
 		<div id="basic-form" class="section">

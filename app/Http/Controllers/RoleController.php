@@ -56,7 +56,7 @@ class RoleController extends Controller
         //Pendiente: Autorización
         return view('theme.backoffice.pages.role.show', [
             'role' => $role,
-
+            'permissions' => $role->permissions
         ]);
     }
 

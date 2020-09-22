@@ -12,11 +12,11 @@ class Permission extends Model
 
     //RELACIONES
     public function role(){
-    	return $this->belongsTo('App/Role');
+    	return $this->belongsTo('App\Role');
     }
 
     public function users(){
-    	return $this->belongsToMany('App/User')->withTimestamps();
+    	return $this->belongsToMany('App\User')->withTimestamps();
     }
 
     //ALMACENAMIENTO
@@ -25,6 +25,15 @@ class Permission extends Model
         $slug = Str::slug($request->name, '-');
         alert('Éxito','Se creó un nuevo permiso', 'success')->showConfirmButton();
         return self::create($request->All() + [
+            'slug' => $slug,
+        ]);
+    }
+
+    public function my_update($request)
+    {
+        $slug = Str::slug($request->name, '-');
+        alert('Éxito', 'Se actualizó el permiso correctamente', 'success')->showConfirmButton();
+        self::update($request->all() + [
             'slug' => $slug,
         ]);
     }
