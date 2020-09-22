@@ -4,12 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
+
 class Permission extends Model
 {
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'role_id'];
 
     //RELACIONES
-
     public function role(){
     	return $this->belongsTo('App/Role');
     }
@@ -19,6 +20,14 @@ class Permission extends Model
     }
 
     //ALMACENAMIENTO
+    public function store($request)
+    {
+        $slug = Str::slug($request->name, '-');
+        alert('Éxito','Se creó un nuevo permiso', 'success')->showConfirmButton();
+        return self::create($request->All() + [
+            'slug' => $slug,
+        ]);
+    }
 
     //VALIDACIÓN
 

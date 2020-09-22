@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Permission;
+use App\Http\Requests\Permission\StoreRequest;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -24,7 +25,9 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('theme.backoffice.pages.permission.create', [
+            'roles' => \App\Role::all()
+        ]);
     }
 
     /**
@@ -33,9 +36,11 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, Permission $permission)
     {
-        //
+        $permission = $permission -> store($request);
+        dd('El permiso se ha creado');
+        // return redirect()->route('backoffice.permission.show', $permission);
     }
 
     /**
