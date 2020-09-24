@@ -39,15 +39,25 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //RELACIONES
     public function permissions(){
-        return $this->belongsToMany('App/Permission');
+        return $this->belongsToMany('App\Permission');
     }
 
     public function roles(){
-        return $this->belongsToMany('App/Role')->withTimestamps();
+        return $this->belongsToMany('App\Role')->withTimestamps();
     }
-//ALMACENAMIENTO
+    //ALMACENAMIENTO
 
     //VALIDACIÓN
+    public function has_role($id)
+    {
+        foreach($this->roles as $role){
+            if($role->id == $id || $role->slug == $id){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     //RECUPERACIÓN DE INFORMACIÓN
 

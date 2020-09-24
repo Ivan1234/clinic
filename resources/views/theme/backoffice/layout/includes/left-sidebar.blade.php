@@ -50,9 +50,16 @@
             <i class="material-icons">pie_chart_outlined</i>
             <span class="nav-text">Panel de administración</span>
           </a>
-        </li>      
+        </li> 
 
-          <li class="bold">
+        <li class="bold">
+          <a href="{{ route('backoffice.user.index') }}" class="waves-effect waves-cyan">
+            <i class="material-icons">people</i>
+            <span class="nav-text">Usuarios del sistema</span>
+          </a>
+        </li>       
+
+        <li class="bold">
           <a href="{{ route('backoffice.role.index') }}" class="waves-effect waves-cyan">
             <i class="material-icons">perm_identity</i>
             <span class="nav-text">Roles del sistema</span>
