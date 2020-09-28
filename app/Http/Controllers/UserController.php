@@ -106,8 +106,30 @@ class UserController extends Controller
     */
     public function role_assignment(Request $request, User $user)
     {
-        $user->roles()->sync($request->roles);
-        alert('Éxito', 'Roles asignados', 'success');
+        $user->role_assignment($request);
+        return redirect()->route('backoffice.user.show', $user);
+    }
+
+    /**
+    *Mostrar el formulario para asignar los permisos
+    *
+    */
+    public function assign_permission(User $user)
+    {
+        return view('theme.backoffice.pages.user.assign_permission', [
+            'user' => $user,
+            'roles' => $user->roles
+        ]);
+    }
+
+    /**
+    *Asignar los permisos en la tabla pivote de la base de datos
+    *
+    */
+    public function permission_assignment(Request $request, User $user)
+    {
+        $user->permissions()->sync($request->permissions);
+        alert('Éxito', 'Permisos asignados', 'success');
         return redirect()->route('backoffice.user.show', $user);
     }
 }
