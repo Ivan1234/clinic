@@ -14,7 +14,7 @@
 
 @section('content')
 <div class="section">
-	<p class="caption">Introducce los datos para crear un nuevo rol</p>
+	<p class="caption">Introduce los datos para crear un nuevo rol</p>
 	<div class="divider"></div>
 
 	<div id="basic-form" class="section">

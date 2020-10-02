@@ -13,11 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function(){
+	return view('welcome');
+});
+
+Route::get('/home', function(){
+	return view('home');
+})->middleware('auth');
+
 Auth::routes(['verify' => true]);
 
 //Backoffice
 Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
-	// Route::get('/role', 'RoleController@index')->name('role.index');
+	Route::get('/admin', 'AdminController@show')->name('admin.show');
 	Route::resource('/user', 'UserController');
 	Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');
 	Route::post('user/{user}/role_assignment', 'UserController@role_assignment')->name('user.role_assignment');

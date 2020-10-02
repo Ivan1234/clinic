@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'dob', 'email', 'password',
     ];
 
     /**
@@ -46,11 +47,35 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
     //ALMACENAMIENTO
-    public function role_assignment($request)
+
+    public function store($request)
     {
-        $this->permission_mass_assignment($request->roles);
-        $this->roles()->sync($request->roles);
-        $this->verify_permission_integrity($request->roles);
+        $user = self::create($request->all());
+        $user->update(['password' => Hash::make($request->password)]);
+        $roles = [$request->role];
+        $user -> role_assignment(null, $roles);
+        alert('Éxito', 'Usuario creado con éxito', 'success');
+        return $user; 
+    }
+
+    public function my_update($request)
+    {
+        self::update($request->all());
+        alert('Éxito', 'Usuario actualizado', 'success');
+    }
+
+    public function role_assignment($request, array $roles = null)
+    {
+        if(is_null($roles)){
+            $roles = $request->roles;
+        }
+        else{
+            $roles = $roles;
+        }
+
+        $this->permission_mass_assignment($roles);
+        $this->roles()->sync($roles);
+        $this->verify_permission_integrity($roles);
         alert('Éxito', 'Roles asignados', 'success');
     }
 
