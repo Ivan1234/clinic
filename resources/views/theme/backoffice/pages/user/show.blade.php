@@ -26,6 +26,7 @@
 				<div class="card">
 					<div class="card-content">
 						<span class="card-title">{{ $user->name }}</span>
+						<p><strong>Edad: </strong>{{$user->age()}}</p>
 						<h4>Roles: </h4>
 						<ul>
 							@foreach ($user->roles as $role)

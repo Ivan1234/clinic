@@ -20,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name', 'dob', 'email', 'password',
     ];
 
+    protected $dates = ['dob'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -102,6 +104,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function has_any_role(array $roles)
+    {
+        foreach($roles as $role){
+            if($this->has_role($role)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function has_permission($id)
     {
         foreach($this->permissions as $permission){
@@ -114,6 +127,25 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     //RECUPERACIÓN DE INFORMACIÓN
+    public function age()
+    {
+        if(!is_null($this->dob)){
+            $age = $this->dob->age;
+            if($age == 1){
+                $years = "año";
+            }
+            else{
+                $years = "años";
+            }
+
+            $msj = $age.' '.$years;
+        }
+        else{
+            $msj = "indefinido";
+        }
+
+        return $msj;
+    }
 
     //OTRAS OPERACIONES
     public function verify_permission_integrity(array $roles)

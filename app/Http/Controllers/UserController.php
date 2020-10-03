@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
@@ -91,9 +93,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        alert('Éxito', 'Usuario eliminado', 'success');
+        return redirect()->route('backoffice.user.index');
     }
 
     /**
@@ -139,5 +143,25 @@ class UserController extends Controller
         $user->permissions()->sync($request->permissions);
         alert('Éxito', 'Permisos asignados', 'success');
         return redirect()->route('backoffice.user.show', $user);
+    }
+
+    /**
+    *Mostrar el formulario para importar usuarios
+    *
+    */
+    public function import()
+    {
+        return view('theme.backoffice.pages.user.import');
+    }
+
+    /**
+    *Importar usuario desde una hoja de excel
+    *
+    */
+    public function make_import(Request $request)
+    {
+        Excel::import(new UsersImport, $request->file('excel'));
+        alert('Éxito', 'Usuaios importados', 'success');
+        return redirect()->route('backoffice.user.index');
     }
 }

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', function(){
+	return 'Permiso concedido';
+})->middleware('Role:administrador-paciente');
+
 Route::get('/', function(){
 	return view('welcome');
 });
@@ -27,6 +31,10 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 	Route::get('/admin', 'AdminController@show')->name('admin.show');
 	Route::resource('/user', 'UserController');
+
+	Route::get('user_import', 'UserController@import')->name('user.import');
+	Route::post('user_make_import', 'UserController@make_import')->name('user.make_import');
+
 	Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');
 	Route::post('user/{user}/role_assignment', 'UserController@role_assignment')->name('user.role_assignment');
 	Route::get('user/{user}/assign_permission', 'UserController@assign_permission')->name('user.assign_permission');
