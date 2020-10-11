@@ -16,9 +16,9 @@ class RolePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function index(User $user)
     {
-        //
+        return $user->has_permission('index-role');
     }
 
     /**
@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        //
+        return $user->has_permission('view-role');
     }
 
     /**
@@ -41,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return true;   
+        return $user->has_permission('create-role');   
     }
 
     /**
@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        //
+        return $user->has_permission('update-role');
     }
 
     /**
@@ -65,7 +65,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        //
+        return $user->has_permission('delete-role');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Permission;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Role;
 
 class StoreRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->can('create', Role::class);
     }
 
     /**

@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('Role:' . config('app.admin_role'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //Pendiente: Autorización
+        //Autorización
+        $this->authorize('index', Role::class);
         return view('theme.backoffice.pages.role.index', [
             'roles' => Role::all(),
         ]);
@@ -29,7 +34,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //Pendiente: Autorización
+        //Autorización
+        $this->authorize('create', Role::class);
         return view('theme.backoffice.pages.role.create');
     }
 
@@ -53,7 +59,8 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //Pendiente: Autorización
+        //Autorización
+        $this->authorize('view', $role);
         return view('theme.backoffice.pages.role.show', [
             'role' => $role,
             'permissions' => $role->permissions
@@ -68,7 +75,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //Pendiente: Autorización
+        //Autorización
+        $this->authorize('update', $role);
         return view('theme.backoffice.pages.role.edit', [
             'role' => $role,
         ]);
@@ -95,7 +103,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //Pendiente: Autorización
+        //Autorización
+        $this->authorize('delete', $role);
         $role->delete();
         alert('Éxito','Se eliminó un rol', 'success')->showConfirmButton();
         return redirect()->route('backoffice.role.index');
