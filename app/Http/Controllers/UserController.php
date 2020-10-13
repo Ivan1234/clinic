@@ -12,6 +12,10 @@ use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -174,5 +178,13 @@ class UserController extends Controller
         Excel::import(new UsersImport, $request->file('excel'));
         alert('Éxito', 'Usuaios importados', 'success');
         return redirect()->route('backoffice.user.index');
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('theme.frontoffice.pages.user.profile', [
+            'user' => $user,
+        ]);
     }
 }

@@ -43,7 +43,10 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 	Route::resource('/permission', 'PermissionController');
 });
 
-
+Route::group(['as' => 'frontoffice.'], function(){
+	Route::get('profile', 'UserController@profile')->name('user.profile');
+	Route::get('patient/cite', 'PatientController@cite')->name('patient.cite');
+});
 
 
 

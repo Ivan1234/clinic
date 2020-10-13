@@ -1,0 +1,1 @@
+<script type="text/javascript" src="{{asset('assets/frontoffice/js/materialize.js')}}"></script>
