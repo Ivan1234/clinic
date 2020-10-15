@@ -46,7 +46,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->has_permission('update-user');
+        return ($user->has_permission('update-user') && $user->has_role(config('app.admin_role'))) || $user->id == $model->id;
     }
 
     /**

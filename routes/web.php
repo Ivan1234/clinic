@@ -45,7 +45,13 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 
 Route::group(['as' => 'frontoffice.'], function(){
 	Route::get('profile', 'UserController@profile')->name('user.profile');
-	Route::get('patient/cite', 'PatientController@cite')->name('patient.cite');
+	Route::get('profile/{user}/edit', 'UserController@edit')->name('user.edit');
+	Route::put('profile/{user}/update', 'UserController@update')->name('user.update');
+
+	Route::get('patient/schedule', 'PatientController@schedule')->name('patient.schedule');
+	Route::get('patient/appointments', 'PatientController@appointments')->name('patient.appointments');
+	Route::get('patient/prescriptions', 'PatientController@prescriptions')->name('patient.prescriptions');
+	Route::get('patient/invoices', 'PatientController@invoices')->name('patient.invoices');
 });
 
 

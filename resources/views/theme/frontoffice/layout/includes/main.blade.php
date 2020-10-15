@@ -10,6 +10,7 @@
 		@yield('content')
 	</main>
 	@include('theme.frontoffice.layout.includes.footer')
+	@include('theme.frontoffice.layout.includes.foot')
 	@yield('foot')
 </body>
 </html>

@@ -41,7 +41,7 @@
 
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="dob" type="date" name="dob" value="{{$user->dob}}">										
+										<input id="dob" type="date" name="dob" value="{{$user->dob->format('Y-m-d')}}">										
 										@error('dob')
 										<span class="invalid-feedback" role="alert">
 											<strong style="color: red">{{ $message }}</strong>

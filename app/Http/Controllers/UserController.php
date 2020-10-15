@@ -77,7 +77,14 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        return view('theme.backoffice.pages.user.edit',[
+
+        if(isset($_GET['view'])){
+            $view = $_GET['view'];
+        }else{
+            $view = null;
+        }
+
+        return view($user->edit_view($view),[
             'user' => $user,
         ]);
     }
@@ -92,7 +99,12 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->my_update($request);
-        return redirect()->route('backoffice.user.show', $user);
+        if(isset($_GET['view'])){
+            $view = $_GET['view'];
+        }else{
+            $view = null;
+        }
+        return redirect()->route($user->user_show(), $user);
     }
 
     /**
