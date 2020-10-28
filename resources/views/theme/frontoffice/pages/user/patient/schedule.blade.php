@@ -26,22 +26,35 @@
 								<div class="input-field col s12">
 									<i class="material-icons prefix">people</i>
 									<select name="doctor">
+										<option value="1">Internistas</option>
+										<option value="2">Pediatras</option>
+										<option value="1">Ondontólogos</option>
+									</select>
+									<label>Selecciona la especialidad</label>
+								</div>								
+							</div>
+
+								<div class="row">
+								<div class="input-field col s12">
+									<i class="material-icons prefix">people</i>
+									<select name="doctor">
 										<option value="1">Raúl</option>
-										<option value="2">José</option>
-										<option value="1">Andrea</option>
+										<option value="2">Andrea</option>
+										<option value="1">José</option>
 									</select>
 									<label>Selecciona al doctor</label>
 								</div>								
 							</div>
+
 							<div class="input-field col s12 m6">								
 								<i class="material-icons prefix">today</i>
-								<input id="datepicker" type="text" name="date" class="datepicker">
-								<label for="datepicker">Selecciona una fecha</label>
+								<input id="datepicker" type="text" name="date" class="datepicker" placeholder="Selecciona una fecha">
+								
 							</div>
 							<div class="input-field col s12 m6">
 								<i class="material-icons prefix">access_time</i>
-								<input id="timepicker" type="text" name="time" class="timepicker">
-								<label for="timepicker">Selecciona una fecha</label>
+								<input id="timepicker" type="text" name="time" class="timepicker" placeholder="Selecciona un horario">
+								
 							</div>
 						</div>
 						<div class="row">
@@ -51,6 +64,9 @@
 				</div>
 			</div>
 		</div>
+
+
+
 	</div>
 </div>
 @endsection

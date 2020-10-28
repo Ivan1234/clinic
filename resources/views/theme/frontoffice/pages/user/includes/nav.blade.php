@@ -14,6 +14,7 @@
 		@endif
 
 		<a href="{{route('frontoffice.user.edit', [auth()->user(), 'view=frontoffice'])}}" class="collection-item {!!active_class(route('frontoffice.user.edit', auth()->user()))!!}">Editar perfil</a>
-		<a href="#!" class="collection-item">Modificar</a>
+
+		<a href="{{route('frontoffice.user.edit_password')}}" class="collection-item {!!active_class(route('frontoffice.user.edit', auth()->user()))!!}">Modificar contraseña</a>
 	</div>
 </div>

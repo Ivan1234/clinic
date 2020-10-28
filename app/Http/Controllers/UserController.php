@@ -6,9 +6,11 @@ use App\User;
 use App\Role;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
 
 class UserController extends Controller
 {
@@ -25,7 +27,7 @@ class UserController extends Controller
     {
         $this->authorize('index', User::class);
         return view('theme.backoffice.pages.user.index', [
-            'users' => User::all(),
+            'users' => auth()->user()->visible_users(),
         ]);
     }
 
@@ -38,7 +40,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         return view('theme.backoffice.pages.user.create',[
-            'roles' => Role::all(),
+            'roles' => auth()->user()->visible_roles(),
         ]);
     }
 
@@ -198,5 +200,19 @@ class UserController extends Controller
         return view('theme.frontoffice.pages.user.profile', [
             'user' => $user,
         ]);
+    }
+
+    public function edit_password()
+    {
+        $this->authorize('update_password', auth()->user());
+        return view('theme.frontoffice.pages.user.edit_password');
+    }
+
+    public function change_password(ChangePasswordRequest $request)
+    {
+        $request->user()->password = Hash::make($request->password);
+        $request->user()->save();
+        alert('Éxito', 'Contraseña actualizada', 'success');
+        return redirect()->back();
     }
 }

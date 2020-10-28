@@ -9,6 +9,7 @@
   <head>
      <title>@yield('title')</title>
      @include('theme.backoffice.layout.includes.head')
+     @yield('head')
   </head>
 
   <body>    
@@ -30,7 +31,7 @@
 
     @include('theme.backoffice.layout.includes.footer')
     
-    @include('theme.backoffice.layout.includes.foot')   
-    
+    @include('theme.backoffice.layout.includes.foot')     
+    @yield('foot')
   </body>
 </html>

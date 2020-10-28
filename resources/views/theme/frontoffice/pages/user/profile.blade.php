@@ -1,6 +1,6 @@
 @extends('theme.frontoffice.layout.includes.main')
 
-@section('title', 'Perfil de' . $user->name)
+@section('title', 'Perfil de: ' . $user->name)
 
 @section('head')
 @endsection

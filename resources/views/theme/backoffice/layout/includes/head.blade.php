@@ -10,4 +10,4 @@
  <link href="{{ asset('assets/plugins/flag-icon/css/flag-icon.min.css') }}" rel="stylesheet">
 
 
- @yield('head')
+ 
