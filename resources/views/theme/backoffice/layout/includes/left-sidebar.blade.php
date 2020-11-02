@@ -71,8 +71,14 @@
             <i class="material-icons">vpn_key</i>
             <span class="nav-text">Permisos del sistema</span>
           </a>
-        </li>                  
-          
+        </li>  
+
+         <li class="bold">
+          <a href="{{ route('backoffice.speciality.index') }}" class="waves-effect waves-cyan">
+            <i class="material-icons">local_hospital</i>
+            <span class="nav-text">Especialidades Médicas</span>
+          </a>
+        </li> 
 
       </ul>
     </li>

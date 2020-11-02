@@ -9,7 +9,7 @@ class AdminController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('Role:' . config('app.admin_role') . '-' . config('app.secretary_role'));
+		$this->middleware('Role:' . config('app.admin_role') . '-' . config('app.secretary_role') . '-' . config('app.doctor_role'));
 	}
 
     public function show()

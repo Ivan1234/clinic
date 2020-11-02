@@ -49,6 +49,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles(){
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
+
+     public function specialities(){
+        return $this->belongsToMany('App\Speciality')->withTimestamps();
+    }
+
     //ALMACENAMIENTO
 
     public function store($request)
@@ -180,7 +185,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $roles = Role::all();
         }
 
-        if($this->has_role(config('app.secretary_role'))){
+        if($this->has_any_role([config('app.secretary_role'), config('app.doctor_role')])){
             // $roles = Role::where('slug', config('app.patient_role'))->orWhere('slug', config('app.doctor_role'))->get();
             $roles = Role::where('slug', config('app.patient_role'))->get();
         }

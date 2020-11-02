@@ -25,7 +25,9 @@ class PatientController extends Controller
     }
 
     public function back_appointments(User $user){
-        return 'index de back_appointments';
+        return view('theme.backoffice.pages.user.patient.appointment', [
+            "user" => $user,
+        ]);
     }
 
     public function prescriptions()
@@ -35,11 +37,13 @@ class PatientController extends Controller
 
     public function invoices()
     {
-        return view('theme.frontoffice.pages.user.patient.invoices');
+        return view('theme.frontoffice.pages.user.patient.invoice');
     }
 
      public function back_invoices(User $user)
     {
-        return 'index de back_invoices';
+        return view('theme.backoffice.pages.user.patient.invoice', [
+            "user" => $user,
+        ]);
     }
 }
