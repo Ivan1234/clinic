@@ -27,12 +27,10 @@
 					<div class="card-content">
 						<span class="card-title">{{ $user->name }}</span>
 						<p><strong>Edad: </strong>{{$user->age()}}</p>
-						<h4>Roles: </h4>
-						<ul>
-							@foreach ($user->roles as $role)
-							<li>{{$role->name}}</li>
-							@endforeach
-						</ul>
+						<p><strong>Roles: </strong>{{$user->list_roles()}}</p>
+						@if($user->has_role(config('app.doctor_role')))
+						<p><strong>Especialidades: </strong>{{$user->list_specialities()}}</p>
+						@endif
 					</div>
 					<div class="card-action">
 						<a href="{{ route('backoffice.user.edit', $user) }}">EDITAR</a>

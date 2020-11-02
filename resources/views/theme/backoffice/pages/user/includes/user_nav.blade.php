@@ -17,5 +17,8 @@
 	@if(Auth::user()->has_role(config('app.admin_role')))
 	<a href="{{route('backoffice.user.assign_role', $user)}}" class="collection-item">Asignar roles</a>
 	<a href="{{route('backoffice.user.assign_permission', $user)}}" class="collection-item">Asignar permisos</a>
+		@if($user->has_role(config('app.doctor_role')))
+		<a href="{{route('backoffice.user.assign_speciality', $user)}}" class="collection-item">Asignar Especialidad</a>
+		@endif
 	@endif	
 </div

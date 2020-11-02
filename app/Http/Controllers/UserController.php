@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use App\Speciality;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
@@ -169,6 +170,25 @@ class UserController extends Controller
         $this->authorize('assign_permission', $user);
         $user->permissions()->sync($request->permissions);
         alert('Éxito', 'Permisos asignados', 'success');
+        return redirect()->route('backoffice.user.show', $user);
+    }
+
+    /**
+    *Mostrar formulario para asignar especialidades
+    *
+    */
+    public function assign_speciality(User $user)
+    {
+        return view('theme.backoffice.pages.user.assign_speciality', [
+            'user' => $user,
+            'specialities' => Speciality::all()
+        ]);
+    }
+
+    public function speciality_assignment(Request $request, User $user)
+    {                
+        $user->specialities()->sync($request->specialities);
+        alert('Éxito', 'especialidades sincronizadas', 'success');
         return redirect()->route('backoffice.user.show', $user);
     }
 

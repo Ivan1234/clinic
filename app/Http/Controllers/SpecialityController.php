@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Speciality;
+use App\Http\Requests\Speciality\StoreRequest;
+use App\Http\Requests\Speciality\UpdateRequest;
 use Illuminate\Http\Request;
 
 class SpecialityController extends Controller
@@ -14,7 +16,9 @@ class SpecialityController extends Controller
      */
     public function index()
     {
-        //
+        return view('theme.backoffice.pages.speciality.index', [
+            'specialities'=>Speciality::all()
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class SpecialityController extends Controller
      */
     public function create()
     {
-        //
+        return view('theme.backoffice.pages.speciality.create');
     }
 
     /**
@@ -33,9 +37,10 @@ class SpecialityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request, Speciality $speciality)
     {
-        //
+        $speciality = $speciality->store($request);
+        return redirect()->route('backoffice.speciality.show', $speciality);
     }
 
     /**
@@ -46,7 +51,10 @@ class SpecialityController extends Controller
      */
     public function show(Speciality $speciality)
     {
-        //
+        return view('theme.backoffice.pages.speciality.show', [
+            'speciality' => $speciality,
+            'users' => $speciality->users
+        ]);
     }
 
     /**
@@ -57,7 +65,9 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
-        //
+        return view('theme.backoffice.pages.speciality.edit', [
+            'speciality' => $speciality
+        ]);
     }
 
     /**
@@ -67,9 +77,10 @@ class SpecialityController extends Controller
      * @param  \App\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Speciality $speciality)
+    public function update(UpdateRequest $request, Speciality $speciality)
     {
-        //
+        $speciality->my_update($request);
+        return redirect()->route('backoffice.speciality.show', $speciality);
     }
 
     /**
@@ -80,6 +91,7 @@ class SpecialityController extends Controller
      */
     public function destroy(Speciality $speciality)
     {
-        //
+        $speciality->delete();
+        return redirect()->route('backoffice.speciality.index');
     }
 }

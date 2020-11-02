@@ -132,6 +132,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function has_speciality($id){
+        foreach ($this->specialities as $speciality) {
+            if($speciality->id == $id){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     //RECUPERACIÓN DE INFORMACIÓN
     public function age()
     {
@@ -158,8 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if($this->has_role(config('app.admin_role'))){
             $users = self::all();
         }
-
-        if($this->has_role(config('app.secretary_role'))){
+        else if($this->has_role(config('app.secretary_role'))){
             $users =  self::whereHas('roles', function($q){
                 $q->whereIn('slug', [
                     config('app.doctor_role'),
@@ -167,9 +176,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ]);
             })->get();
         }
-
-
-        if($this->has_role(config('app.doctor_role'))){
+        else if($this->has_role(config('app.doctor_role'))){
              $users =  self::whereHas('roles', function($q){
                 $q->whereIn('slug', [
                     config('app.patient_role'),
@@ -193,6 +200,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $roles;
     }
 
+    public function list_roles(){
+        //Almacena todos los roles del usuario, pero solo retorna el campo de nombre y los retorna como array
+        $roles = $this->roles->pluck('name')->toArray();
+        //Retorna una cadena de texto
+        $string = implode(', ', $roles);
+        return $string;
+    }
+
+    public function list_specialities()
+    {
+        $specialities = $this->specialities->pluck('name')->toArray();
+        $string = implode(', ', $specialities);
+        return $string;
+    }
     //OTRAS OPERACIONES
     public function verify_permission_integrity(array $roles)
     {

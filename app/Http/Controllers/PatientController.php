@@ -9,7 +9,9 @@ class PatientController extends Controller
 {
     public function schedule()
     {
-    	return view('theme.frontoffice.pages.user.patient.schedule');
+    	return view('theme.frontoffice.pages.user.patient.schedule', [
+            'specialities' => \App\Speciality::all(),
+        ]);
     }
 
      public function back_schedule(User $user)

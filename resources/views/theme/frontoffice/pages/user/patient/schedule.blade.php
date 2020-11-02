@@ -25,22 +25,21 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<i class="material-icons prefix">people</i>
-									<select name="doctor">
-										<option value="1">Internistas</option>
-										<option value="2">Pediatras</option>
-										<option value="1">Ondontólogos</option>
+									<select id="speciality" name="speciality">
+										<option disabled="" selected="">-- Selecciona una especialidad --</option>
+										@foreach($specialities as $speciality)
+										<option value="{{$speciality->id}}">{{$speciality->name}}</option>
+										@endforeach
 									</select>
 									<label>Selecciona la especialidad</label>
 								</div>								
 							</div>
 
-								<div class="row">
+							<div class="row">
 								<div class="input-field col s12">
 									<i class="material-icons prefix">people</i>
-									<select name="doctor">
-										<option value="1">Raúl</option>
-										<option value="2">Andrea</option>
-										<option value="1">José</option>
+									<select id="doctor" name="doctor">
+										<option disabled="" selected="">-- Primero selecciona una especialidad --</option>
 									</select>
 									<label>Selecciona al doctor</label>
 								</div>								
@@ -90,6 +89,22 @@
 	});
 
 	var time_picker = input_time.pickatime('picker');
+
+	var speciality = $('#speciality');
+	var doctor = $('#doctor');
+
+	speciality.change(function(){
+		$.ajax({
+			url: "{{route('ajax.user_speciality')}}",
+			method: 'GET',
+			data: {
+				speciality: speciality.val(),
+			},
+			success: function(data){
+				console.log(data);
+			}
+		});
+	});
 
 </script>
 @endsection
