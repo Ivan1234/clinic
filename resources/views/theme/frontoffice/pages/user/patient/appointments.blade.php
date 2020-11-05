@@ -24,18 +24,24 @@
 								<td>ID</td>
 								<td>Especialista</td>
 								<td>Fecha</td>
-								<td>Hora</td>
 								<td>Estado</td> <!-- Finalizado, Pagado, Pendiente, Cancelado -->
 							</tr>
 						</thead>
 						<tbody>
+							@forelse($appointments as $appointment)
 							<tr>
-								<td>1</td>
-								<td>Raúl</td>
-								<td>15 de Junio del 2020</td>
-								<td>17:00 hrs</td>
-								<td>Pagado</td>
+								<td>{{$appointment->id}}</td>
+								<td>{{$appointment->doctor()->name}}</td>
+								<td>{{$appointment->date->format('d/m/Y H:i')}}</td>
+								<td>{{$appointment->status}}</td>
 							</tr>
+							@empty
+							<tr>
+								<td colspan="4">No hay citas registradas</td>
+							</tr>
+							@endforelse
+								
+													
 						</tbody>
 					</table>					
 				</div>

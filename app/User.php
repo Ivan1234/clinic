@@ -54,6 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Speciality')->withTimestamps();
     }
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany('App\Appointment');
+    }
+
     //ALMACENAMIENTO
 
     public function store($request)

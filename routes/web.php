@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 	Route::post('user_make_import', 'UserController@make_import')->name('user.make_import');
 
 	Route::get('patient/{user}/schedule', 'PatientController@back_schedule')->name('patient.schedule');	
+	Route::post('patient/{user}/store_back_schedule', 'PatientController@store_back_schedule')->name('patient.store_back_schedule');	
 	Route::get('patient/{user}/appointments', 'PatientController@back_appointments')->name('patient.appointments');
 	Route::get('patient/{user}/invoices', 'PatientController@back_invoices')->name('patient.invoices');
 
@@ -63,6 +64,7 @@ Route::group(['as' => 'frontoffice.'], function(){
 	Route::put('profile/change_password', 'UserController@change_password')->name('user.change_password');
 
 	Route::get('patient/schedule', 'PatientController@schedule')->name('patient.schedule');
+	Route::post('patient/store_schedule', 'PatientController@store_schedule')->name('patient.store_schedule');
 	Route::get('patient/appointments', 'PatientController@appointments')->name('patient.appointments');
 	Route::get('patient/prescriptions', 'PatientController@prescriptions')->name('patient.prescriptions');
 	Route::get('patient/invoices', 'PatientController@invoices')->name('patient.invoices');
@@ -70,5 +72,6 @@ Route::group(['as' => 'frontoffice.'], function(){
 
 Route::group(['middleware' => ['auth'], 'as' => 'ajax.'], function(){
 	Route::get('user_speciality', 'AjaxController@user_speciality')->name('user_speciality');
+	Route::get('invoice_info', 'AjaxController@invoice_info')->name('invoice_info');
 });
 
