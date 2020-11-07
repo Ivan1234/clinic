@@ -3,7 +3,7 @@
 <script type="text/javascript" src="{{asset('assets/frontoffice/plugins/pickadate/picker.date.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/frontoffice/plugins/pickadate/picker.time.js')}}"></script>
 <script type="text/javascript">
-	$('select').{!!$material_select!!}();
+	
 
 	var input_date = $('.datepicker').pickadate({
 		min: true,
@@ -20,6 +20,8 @@
 
 	var time_picker = input_time.pickatime('picker');
 
+	@if(!isset($appointment))
+	$('select').{!!$material_select!!}();
 	var speciality = $('#speciality');
 	var doctor = $('#doctor');
 
@@ -61,5 +63,5 @@
 			]
 		});
 	});
-
+	@endif
 </script>

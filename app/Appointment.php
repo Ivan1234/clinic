@@ -18,7 +18,7 @@ class Appointment extends Model
     #RELACIONES
     public function invoice()
     {
-    	return $this->hasOne('App\Invoice');
+    	return $this->belongsTo('App\Invoice');
     }
 
     public function user()
@@ -47,8 +47,28 @@ class Appointment extends Model
         	'date' => $date->toDateTimeString(),
         	'doctor_id' => $request->doctor,
         	'status' => 'pending',
-        	'user_id' => $request->user()->id,
+        	'user_id' => $request->user->id,
         	'invoice_id' => $invoice->id
+        ]);
+    }
+
+    public function my_update($request){
+        $date = Carbon::createFromFormat('Y-m-d H:i', $request->date_submit . ' ' . $request->time_submit);
+
+        if($request->status == 'done'){
+            $invoice_status = 'approved';
+        }
+        else{
+            $invoice_status = $request->status;
+        }
+
+        self::update([
+            'date' => $date->toDateTimeString(),
+            'status' => $request->status
+        ]);
+
+        $this->invoice->update([
+            'status' => $invoice_status            
         ]);
     }
 

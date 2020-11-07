@@ -12,6 +12,9 @@
 		<a href="{{route('backoffice.patient.appointments', $user)}}" class="collection-item">Citas</a>
 		<a href="{{route('backoffice.patient.invoices', $user)}}" class="collection-item">Facturas</a>
 		@endif
+		@if($user->has_role(config('app.doctor_role')))
+		<a href="{{route('backoffice.doctor.appointments.show', $user)}}" class="collection-item">Citas</a>
+		@endif
 	@endif
 
 	@if(Auth::user()->has_role(config('app.admin_role')))

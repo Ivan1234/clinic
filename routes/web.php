@@ -40,8 +40,13 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 
 	Route::get('patient/{user}/schedule', 'PatientController@back_schedule')->name('patient.schedule');	
 	Route::post('patient/{user}/store_back_schedule', 'PatientController@store_back_schedule')->name('patient.store_back_schedule');	
+	Route::get('backoffice/appointments', 'PatientController@show_appointments')->name('patient.appointments.show');
+	Route::get('backoffice/doctor/{user}/appointments', 'PatientController@show_doctor_appointments')->name('doctor.appointments.show');
 	Route::get('patient/{user}/appointments', 'PatientController@back_appointments')->name('patient.appointments');
+	Route::get('patient/{user}/appointments/{appointment}/edit', 'PatientController@back_appointments_edit')->name('patient.appointments.edit');
+	Route::post('patient/{user}/appointments/{appointment}/update', 'PatientController@back_appointments_update')->name('patient.appointments.update');
 	Route::get('patient/{user}/invoices', 'PatientController@back_invoices')->name('patient.invoices');
+	Route::get('patient/{user}/invoice/{invoice}/edit', 'PatientController@back_invoice_edit')->name('patient.invoice.edit');
 
 	Route::resource('/role', 'RoleController');
 	Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');

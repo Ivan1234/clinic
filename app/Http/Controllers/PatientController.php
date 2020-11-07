@@ -12,7 +12,7 @@ class PatientController extends Controller
     public function schedule()
     {
     	return view('theme.frontoffice.pages.user.patient.schedule', [
-            'user' => auth()->user(),
+            'user' => user(),
             'specialities' => \App\Speciality::all(),
         ]);
     }
@@ -47,33 +47,100 @@ class PatientController extends Controller
 
     public function appointments()
     {
-       return view('theme.frontoffice.pages.user.patient.appointments', [
-        'appointments' => user()->appointments->sortBy('date')
-    ]);
-   }
+        return view('theme.frontoffice.pages.user.patient.appointments', [
+            'appointments' => user()->appointments->sortBy('date')
+        ]);
+    }
 
-   public function back_appointments(User $user){
-    return view('theme.backoffice.pages.user.patient.appointment', [
-        "user" => $user,
-    ]);
-}
+    public function back_appointments(User $user){
+        return view('theme.backoffice.pages.user.patient.appointment', [
+            "user" => $user,
+            'appointments' => $user->appointments->sortBy('date')
+        ]);
+    }
 
-public function prescriptions()
-{
-   return view('theme.frontoffice.pages.user.patient.prescriptions');
-}
+    public function show_appointments()
+    {
+        $appointments_collection = Appointment::all();
+        $appointments = []; 
 
-public function invoices()
-{
-    return view('theme.frontoffice.pages.user.patient.invoices', [
-        'invoices' => user()->invoices
-    ]);
-}
+        foreach($appointments_collection as $key => $appointment)
+        {
+            $appointments[] = [
+                'title' => $appointment->user->name . ' cita con ' . $appointment->doctor()->name,
+                'start' => $appointment->date->format('Y-m-d\TH:i:s'),
+                'url' => route('backoffice.patient.appointments.edit', [
+                    $appointment->user,
+                    $appointment
+                ])
+            ];
+        }
 
-public function back_invoices(User $user)
-{
-    return view('theme.backoffice.pages.user.patient.invoice', [
-        "user" => $user,
-    ]);
-}
+        return view('theme.backoffice.pages.appointment.show', [
+            'appointments'=> json_encode($appointments)
+        ]);
+    }
+
+    public function show_doctor_appointments(User $user)
+    {
+        $appointments_collection = Appointment::where('doctor_id', $user->id)->get();
+        $appointments = []; 
+
+        foreach($appointments_collection as $key => $appointment)
+        {
+            $appointments[] = [
+                'title' => $appointment->user->name . ' cita con ' . $appointment->doctor()->name,
+                'start' => $appointment->date->format('Y-m-d\TH:i:s'),
+                'url' => route('backoffice.patient.appointments.edit', [
+                    $appointment->user,
+                    $appointment
+                ])
+            ];
+        }
+
+        return view('theme.backoffice.pages.appointment.show', [
+            'user' => $user,
+            'appointments'=> json_encode($appointments)
+        ]);   
+    }
+
+    public function back_appointments_edit(User $user, Appointment $appointment)
+    {
+        return view('theme.backoffice.pages.user.patient.appointment_edit', [
+            'user' => $user,
+            'appointment' => $appointment
+        ]);
+    }
+
+    public function back_appointments_update(Request $request, User $user, Appointment $appointment)
+    {
+        $appointment->my_update($request);
+        alert('Éxito', 'Cita actualizada', 'success')->showConfirmButton();
+        return redirect()->route('backoffice.user.show', $user);
+    }
+
+    public function prescriptions()
+    {
+        return view('theme.frontoffice.pages.user.patient.prescriptions');
+    }
+
+    public function invoices()
+    {
+        return view('theme.frontoffice.pages.user.patient.invoices', [
+            'invoices' => user()->invoices
+        ]);
+    }
+
+    public function back_invoices(User $user)
+    {
+        return view('theme.backoffice.pages.user.patient.invoice', [
+            "user" => $user,
+            'invoices' => $user->invoices
+        ]);
+    }
+
+    public function back_invoice_edit(User $user, Invoice $invoice)
+    {
+        dd('Formulario para editar el invoice');
+    }
 }

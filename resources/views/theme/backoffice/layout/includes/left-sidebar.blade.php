@@ -57,6 +57,13 @@
             <i class="material-icons">people</i>
             <span class="nav-text">Usuarios del sistema</span>
           </a>
+        </li> 
+
+        <li class="bold">
+          <a href="{{ route('backoffice.patient.appointments.show') }}" class="waves-effect waves-cyan">
+            <i class="material-icons">access_time</i>
+            <span class="nav-text">Citas del sistema</span>
+          </a>
         </li>       
 
         <li class="bold">
