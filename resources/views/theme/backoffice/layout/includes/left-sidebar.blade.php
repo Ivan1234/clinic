@@ -1,6 +1,6 @@
  <aside id="left-sidebar-nav">
   <ul id="slide-out" class="side-nav fixed leftside-navigation">
-    
+
     <li class="user-details cyan darken-2">
       <div class="row">
         <div class="col col s4 m4 l4">
@@ -59,12 +59,25 @@
           </a>
         </li> 
 
+        @if(user()->has_role(config('app.doctor_role')))      
+
+        <li class="bold">
+          <a href="{{ route('backoffice.doctor.appointments.show', user()->id) }}" class="waves-effect waves-cyan">
+            <i class="material-icons">access_time</i>
+            <span class="nav-text">Mis citas</span>
+          </a>
+        </li> 
+
+        @else
+
         <li class="bold">
           <a href="{{ route('backoffice.patient.appointments.show') }}" class="waves-effect waves-cyan">
             <i class="material-icons">access_time</i>
             <span class="nav-text">Citas del sistema</span>
           </a>
-        </li>       
+        </li> 
+
+        @endif
 
         <li class="bold">
           <a href="{{ route('backoffice.role.index') }}" class="waves-effect waves-cyan">
@@ -80,7 +93,7 @@
           </a>
         </li>  
 
-         <li class="bold">
+        <li class="bold">
           <a href="{{ route('backoffice.speciality.index') }}" class="waves-effect waves-cyan">
             <i class="material-icons">local_hospital</i>
             <span class="nav-text">Especialidades Médicas</span>
@@ -92,6 +105,6 @@
 
   </ul>
   <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only">
-  <i class="material-icons">menu</i>
+    <i class="material-icons">menu</i>
   </a>
 </aside>  

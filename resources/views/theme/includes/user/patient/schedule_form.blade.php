@@ -2,7 +2,12 @@
 	{{csrf_field()}}
 
 	@if(!isset($appointment))
-	<div class="row">
+		@if(user()->has_role(config('app.doctor_role')))
+
+		<input type="hidden" name="doctor" value="{{user()->id}}">
+
+		@else
+		<div class="row">
 		<div class="input-field col s12">
 			<i class="material-icons prefix">people</i>
 			<select id="speciality" name="speciality">
@@ -12,9 +17,9 @@
 			</select>
 			<label>Selecciona la especialidad</label>
 		</div>								
-	</div>
+		</div>
 
-	<div class="row">
+		<div class="row">
 		<div class="input-field col s12">
 			<i class="material-icons prefix">people</i>
 			<select id="doctor" name="doctor">
@@ -22,7 +27,8 @@
 			</select>
 			<label>Selecciona al doctor</label>
 		</div>								
-	</div>
+		</div>	
+		@endif
 
 	@else
 

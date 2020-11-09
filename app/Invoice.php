@@ -38,6 +38,11 @@ class Invoice extends Model
     	]);
     }
 
+    public function my_update($request)
+    {
+        self::update($request->all());
+    }    
+
     #RECUPERACIÓN DE INFORMACIÓN
     public function meta($key, $default=null)
     {
