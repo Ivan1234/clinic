@@ -27,4 +27,27 @@ class AjaxController extends Controller
     		]);
     	}
     }
+
+    public function note_info(Request $request)
+    {
+        if($request->ajax()){
+            $note = \App\ClinicNote::findOrFail($request->note_id);
+            return response()->json([
+                'route' => route('backoffice.clinic_note.update', [$note->user, $note]),
+                'description' => $note->description,
+                'privacy' => $note->privacy
+            ]);
+        }
+    }
+
+    public function disable_dates(Request $request)
+    {
+        if($request->ajax()){
+            $user = \App\User::findOrFail($request->doctor);
+            return response()->json([
+                'disable_dates' => $user->manual_disabled_dates(),
+                'days_off' => $user->days_off(),
+            ]);
+        }
+    }
 }

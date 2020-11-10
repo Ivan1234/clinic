@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,15 +38,21 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 	Route::post('user_make_import', 'UserController@make_import')->name('user.make_import');
 
 	Route::get('patient/{user}/schedule', 'PatientController@back_schedule')->name('patient.schedule');	
-	Route::post('patient/{user}/store_back_schedule', 'PatientController@store_back_schedule')->name('patient.store_back_schedule');	
+	Route::post('patient/{user}/store_back_schedule', 'PatientController@store_back_schedule')->name('patient.store_back_schedule');
+
 	Route::get('backoffice/appointments', 'PatientController@show_appointments')->name('patient.appointments.show');
 	Route::get('backoffice/doctor/{user}/appointments', 'PatientController@show_doctor_appointments')->name('doctor.appointments.show');
 	Route::get('patient/{user}/appointments', 'PatientController@back_appointments')->name('patient.appointments');
 	Route::get('patient/{user}/appointments/{appointment}/edit', 'PatientController@back_appointments_edit')->name('patient.appointments.edit');
 	Route::post('patient/{user}/appointments/{appointment}/update', 'PatientController@back_appointments_update')->name('patient.appointments.update');
+
 	Route::get('patient/{user}/invoices', 'PatientController@back_invoices')->name('patient.invoices');
 	Route::get('patient/{user}/invoice/{invoice}/edit', 'PatientController@back_invoice_edit')->name('patient.invoice.edit');
 	Route::post('patient/{user}/invoice/{invoice}/update', 'PatientController@back_invoice_update')->name('patient.invoice.update');
+
+	Route::resource('patient/{user}/clinic_data', 'ClinicDataController', ['only' => ['index', 'create', 'store']]);
+
+	Route::resource('patient/{user}/clinic_note', 'ClinicNoteController', ['only' => ['store', 'edit', 'update', 'destroy']]);
 
 	Route::resource('/role', 'RoleController');
 	Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');
@@ -56,6 +61,9 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
 	Route::resource('/permission', 'PermissionController');
 	Route::get('user/{user}/assign_permission', 'UserController@assign_permission')->name('user.assign_permission');
 	Route::post('user/{user}/permission_assignment}', 'UserController@permission_assignment')->name('user.permission_assignment');
+
+	Route::get('doctor/{user}/doctor_schedule', 'DoctorScheduleController@assign')->name('doctor.schedule.assign');
+	Route::post('doctor/{user}/doctor_schedule', 'DoctorScheduleController@assignment')->name('doctor.schedule.assignment');
 
 	Route::resource('speciality', 'SpecialityController');
 	Route::get('user/{user}/assign_speciality', 'UserController@assign_speciality')->name('user.assign_speciality');
@@ -79,5 +87,7 @@ Route::group(['as' => 'frontoffice.'], function(){
 Route::group(['middleware' => ['auth'], 'as' => 'ajax.'], function(){
 	Route::get('user_speciality', 'AjaxController@user_speciality')->name('user_speciality');
 	Route::get('invoice_info', 'AjaxController@invoice_info')->name('invoice_info');
+	Route::get('note_info', 'AjaxController@note_info')->name('note_info');
+	Route::get('doctor/disable_dates', 'AjaxController@disable_dates')->name('doctor.disable_dates');
 });
 

@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
 
-     public function specialities(){
+    public function specialities(){
         return $this->belongsToMany('App\Speciality')->withTimestamps();
     }
 
@@ -62,6 +62,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function appointments()
     {
         return $this->hasMany('App\Appointment');
+    }
+
+    public function clinic_datas()
+    {
+        return $this->hasMany('App\ClinicData');
+    }
+
+    public function clinic_notes()
+    {
+        return $this->hasMany('App\ClinicNote');
+    }
+
+    public function doctor_schedules()
+    {
+        return $this->hasMany('App\DoctorSchedule');
+    }
+    public function disable_dates()
+    {
+        return $this->hasMany('App\DisableDate');
+    }
+    public function disable_times()
+    {
+        return $this->hasMany('App\DisableTime');
     }
 
     //ALMACENAMIENTO
@@ -187,15 +210,15 @@ class User extends Authenticatable implements MustVerifyEmail
             })->get();
         }
         else if($this->has_role(config('app.doctor_role'))){
-             $users =  self::whereHas('roles', function($q){
-                $q->whereIn('slug', [
-                    config('app.patient_role'),
-                ]);
-            })->get();
-        }
+           $users =  self::whereHas('roles', function($q){
+            $q->whereIn('slug', [
+                config('app.patient_role'),
+            ]);
+        })->get();
+       }
 
-        return $users;
-    }
+       return $users;
+   }
 
     public function visible_roles(){
         if($this->has_role(config('app.admin_role'))){
@@ -203,7 +226,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         if($this->has_any_role([config('app.secretary_role'), config('app.doctor_role')])){
-            // $roles = Role::where('slug', config('app.patient_role'))->orWhere('slug', config('app.doctor_role'))->get();
+                    // $roles = Role::where('slug', config('app.patient_role'))->orWhere('slug', config('app.doctor_role'))->get();
             $roles = Role::where('slug', config('app.patient_role'))->get();
         }
 
@@ -224,6 +247,52 @@ class User extends Authenticatable implements MustVerifyEmail
         $string = implode(', ', $specialities);
         return $string;
     }
+
+    public function clinic_data_array()
+    {
+        $datas = $this->clinic_datas->pluck('value', 'key')->toArray();
+        return $datas;
+    }
+
+    public function clinic_data($key, $array = null, $default = null)
+    {
+        if(!is_null($array)){
+            $array = $array;
+        }
+        else{
+            $array = $this->clinic_data_array();
+        }
+
+        if(array_key_exists($key, $array)){
+            $value = $array[$key];
+        }
+        else{
+            $value = $default;
+        }
+
+        return $value;
+    }
+
+    public function manual_disabled_dates()
+    {
+        $disable_date = $this->disable_dates()->where('key', 'manual')->first();
+        if(!is_null($disable_date)){
+            return $disable_date->value;
+        }else{
+            return null;
+        }
+    }
+
+    public function days_off()
+    {
+        $days_off = $this->disable_dates()->where('key', 'days_off')->first();
+        if(!is_null($days_off)){
+            return $days_off->value;
+        }else{
+            return null;
+        }
+    }
+
     //OTRAS OPERACIONES
     public function verify_permission_integrity(array $roles)
     {
