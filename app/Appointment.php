@@ -47,7 +47,7 @@ class Appointment extends Model
         	'date' => $date->toDateTimeString(),
         	'doctor_id' => $request->doctor,
         	'status' => 'pending',
-        	'user_id' => $request->user->id,
+        	'user_id' => $request->user()->id,
         	'invoice_id' => $invoice->id
         ]);
     }
